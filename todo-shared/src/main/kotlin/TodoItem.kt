@@ -1,5 +1,3 @@
-package com.jkv
-
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
@@ -16,21 +14,9 @@ data class TodoItem(
     @JsonDeserialize(using = DateDeserializers.DateDeserializer::class)
     val dueDate: LocalDate,
     val assignedTo: String,
-    val importance: Int
+    val importance: Importance
 )
 
-val todo1 = TodoItem(
-    "ToDo1: Add Data access",
-    "Add DB support",
-    LocalDate.of(2020, 10, 31),
-    "Me",
-    1
-)
-
-val todo2 = TodoItem(
-    "ToDo2: Add Data service",
-    "Add DB support",
-    LocalDate.of(2020, 11, 1),
-    "Me2",
-    1
-)
+enum class Importance{
+    LOW, MEDIUM, HIGH
+}

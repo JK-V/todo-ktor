@@ -53,6 +53,11 @@ allprojects {
 subprojects {
     version = "1.0"
 }
-project(":todo-restapis"){
+project(":todo-shared"){
 
+}
+project(":todo-restapis"){
+dependencies{
+    implementation(project(":todo-shared"))
+}
 }
