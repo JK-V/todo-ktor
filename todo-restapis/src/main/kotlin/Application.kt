@@ -10,12 +10,17 @@ import io.ktor.jackson.*
 
 fun main(args: Array<String>): Unit = io.ktor.server.cio.EngineMain.main(args)
 
+//
+val todoContentV1 = ContentType("application", "vendor.todoapi.v1+json")
+
 @Suppress("unused") // Referenced in application.conf
 @kotlin.jvm.JvmOverloads
 fun Application.module(testing: Boolean = false) {
+    //This is DSL
     //Install routing as a feature
     install(Routing) {
-        //This is DSL
+        //Useful for more complex routing applications
+        trace { application.log.trace(it.buildText()) }
         todoApi()
     }
 
@@ -35,6 +40,13 @@ fun Application.module(testing: Boolean = false) {
         jackson {
             //To make it human readable
             enable(SerializationFeature.INDENT_OUTPUT)
+        }
+        //Register with content negotiation with Jackson feature
+//        register(todoContentV1, JacksonConverter())
+        //Another way to register
+        jackson(todoContentV1) {
+            enable(SerializationFeature.INDENT_OUTPUT)
+            disableDefaultTyping()
         }
     }
 }
